@@ -45,20 +45,20 @@ public enum MatrixStyle {
     private String mcJcStyle;
     private Integer styleLength;//额外样式数
 
-    private  MatrixStyle(Integer styleId, String styleStr, String mappingBegin, String mappingEnd){
+    MatrixStyle(Integer styleId, String styleStr, String mappingBegin, String mappingEnd){
         this.styleId=styleId;
         this.styleStr=styleStr;
         this.mappingEnd=mappingEnd;
         this.mappingBegin=mappingBegin;
     }
-    private  MatrixStyle(Integer styleId,String styleStr,String mappingBegin,String mappingEnd,Integer styleLength){
+    MatrixStyle(Integer styleId, String styleStr, String mappingBegin, String mappingEnd, Integer styleLength){
         this.styleId=styleId;
         this.styleStr=styleStr;
         this.mappingEnd=mappingEnd;
         this.mappingBegin=mappingBegin;
         this.styleLength=styleLength;
     }
-    private  MatrixStyle(Integer styleId,String styleStr,String mappingBegin,String mappingEnd,String mcJcStyle){
+    MatrixStyle(Integer styleId, String styleStr, String mappingBegin, String mappingEnd, String mcJcStyle){
         this.styleId=styleId;
         this.styleStr=styleStr;
         this.mappingEnd=mappingEnd;

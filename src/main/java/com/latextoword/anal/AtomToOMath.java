@@ -1,33 +1,28 @@
 package com.latextoword.anal;
 
+import com.latextoword.atom.Atom;
+import com.latextoword.atom.AtomBE;
+import com.latextoword.dictionary.AtomRule;
+import com.latextoword.dictionary.AtomRuleSeries;
+import com.latextoword.dictionary.MatrixStyle;
+import com.latextoword.dictionary.OMathRule;
+import com.latextoword.dictionary.dicList.MatrixList;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.latextoword.atom.Atom;
-import com.latextoword.atom.AtomBE;
-import com.latextoword.dictionary.*;
-import com.latextoword.dictionary.dicList.AtomList;
-import com.latextoword.dictionary.dicList.AtomRuleSeriesList;
-import com.latextoword.dictionary.dicList.MatrixList;
 
 public class AtomToOMath {
 
 	private static Hashtable<String, MatrixStyle> matrixDic;
 
-	private  Map<Integer,Integer> groupMap = new HashMap<Integer,Integer>();
+	private final Map<Integer,Integer> groupMap = new HashMap<>();
 
-	private static String beginOMath="<m:oMath>";
+	private static final String mrmt="<m:r><m:t>";
 	
-	private static String endOMath="</m:oMath>";
-	
-	private static String mrmt="<m:r><m:t>";
-	
-	private static String mtmr="</m:t></m:r>";
+	private static final String mtmr="</m:t></m:r>";
 
-	private static String mtmrmrmt="</m:t></m:r><m:r><m:t>";
-
-	private static String pStyle="<m:rPr><m:sty m:val=\"p\"/></m:rPr>";//正体
+	private static final String pStyle="<m:rPr><m:sty m:val=\"p\"/></m:rPr>";//正体
 
 	private static void init() {
 		matrixDic=MatrixList.getMatrixDicList();
@@ -44,9 +39,12 @@ public class AtomToOMath {
 			Atom atom=atoms.get(i);
 			oMathStr=atomToOMathStr(atom,oMathStr);
 		}
+		String mtmrmrmt = "</m:t></m:r><m:r><m:t>";
 		oMathStr=oMathStr.replace(mtmrmrmt,"");
 		if(!groupMap.isEmpty()) oMathStr=oMathStr.replace("<m:mr><m:e></m:e></m:mr>","");
-        oMathStr=beginOMath+oMathStr+endOMath;
+		String beginOMath = "<m:oMath>";
+		String endOMath = "</m:oMath>";
+		oMathStr= beginOMath +oMathStr+ endOMath;
 		oMathStr=oMathStrAddFracFontStyle(oMathStr);//分数增加字体大小控制
 		return oMathStr;
    }
@@ -345,11 +343,5 @@ public class AtomToOMath {
 		}
 		return atomBeginEndStr;
 	}
-
-	/*public static void main(String[] args) {
-		String ll="<m:oMath><m:r><m:rPr><m:sty m:val=\"p\"/></m:rPr><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:cs=\"Times New Roman\"/></w:rPr><m:t>a</m:t></m:r><m:r><m:rPr><m:sty m:val=\"p\"/></m:rPr><m:t> </m:t> </m:r><m:r><m:t>\u200B毛\u200Bmol</m:t></m:r><m:r><m:rPr><m:sty m:val=\"p\"/></m:rPr><m:t> </m:t> </m:r><m:r><m:t>瑞瑞P</m:t></m:r><m:sSub><m:e><m:r><m:t>\u200BH</m:t></m:r></m:e><m:sub><m:r><m:t>4</m:t></m:r></m:sub></m:sSub><m:r><m:t>I</m:t> </m:r></m:oMath>";
-		System.out.println(atomNameStandardized(ll));
-	}*/
-
 
 }

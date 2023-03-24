@@ -1,16 +1,16 @@
 package com.latextoword.anal;
 
-import java.util.*;
-
 import com.latextoword.atom.Atom;
 import com.latextoword.atom.AtomBE;
 import com.latextoword.common.MyJsonUtil;
+import com.latextoword.dictionary.AtomRule;
 import com.latextoword.dictionary.AtomRuleSeries;
 import com.latextoword.dictionary.MatrixStyle;
 import com.latextoword.dictionary.dicList.AtomList;
-import com.latextoword.dictionary.AtomRule;
 import com.latextoword.dictionary.dicList.AtomRuleSeriesList;
 import com.latextoword.dictionary.dicList.MatrixList;
+
+import java.util.*;
 
 //atom复制到相应父结构之下，原atom失效
 public class AtomAnalysis {
@@ -20,9 +20,9 @@ public class AtomAnalysis {
 
 	private static Hashtable<String, List<AtomRuleSeries>> atomRuleSeriesDic;
 
-    private  Map<Integer,Integer> groupMap = new HashMap<Integer,Integer>();
+    private final Map<Integer,Integer> groupMap = new HashMap<>();
 
-    private  Map<Integer,List<String>> groupEndStrList = new HashMap<Integer,List<String>>();//right 的结束样式
+    private final Map<Integer,List<String>> groupEndStrList = new HashMap<>();//right 的结束样式
 
 	private static void init() {
 		atomDic=AtomList.getAtomDicList();
@@ -54,7 +54,7 @@ public class AtomAnalysis {
    public  String atomAnalysis(List<Atom> atoms,Integer i){
 	   Atom atom=atoms.get(i);
 	   List<AtomBE> atomBEs=atom.getAtomBEs();
-	   if(atomBEs==null) atomBEs=new ArrayList<AtomBE>();
+	   if(atomBEs==null) atomBEs= new ArrayList<>();
 	   AtomRule atomRule=atom.getAtomRule();
 	   Integer groupBeginEnd=0;
 	   Integer group =0;
@@ -65,8 +65,10 @@ public class AtomAnalysis {
 	   }
 	   groupBeginEnd = atomRule.getGroupBeginEnd();
 	   group = atomRule.getGroup();
-	   if(group!=null&&groupBeginEnd!=null&&groupBeginEnd.equals(1)) groupMap.put(group,groupMap.get(group)==null?1:groupMap.get(group)+1);
-	   if(group!=null&&groupBeginEnd!=null&&groupBeginEnd.equals(2)) groupMap.put(group,groupMap.get(group)==null?0:groupMap.get(group)-1);
+	   if(group!=null&&groupBeginEnd!=null&&groupBeginEnd.equals(1))
+	   	groupMap.put(group,groupMap.get(group)==null?1:groupMap.get(group)+1);
+	   if(group!=null&&groupBeginEnd!=null&&groupBeginEnd.equals(2))
+	   	groupMap.put(group,groupMap.get(group)==null?0:groupMap.get(group)-1);
 	   Atom ruleAtom=atomRule.getAtom();
 	   List<AtomBE> atomRuleBEsTmp=ruleAtom.getAtomBEs();
 	   int step=atomRule.getType();
