@@ -28,7 +28,7 @@ public enum AtomRuleSeries {
     private Integer type;//起始位置
     private OMathRule oMathRule;
 
-    private AtomRuleSeries(Integer seriesId, String atomName, List<AtomBE> atomBEList, Integer type, OMathRule oMathRule){
+    AtomRuleSeries(Integer seriesId, String atomName, List<AtomBE> atomBEList, Integer type, OMathRule oMathRule){
         this.seriesId=seriesId;
         this.atomName=atomName;
         this.atomBEList=atomBEList;

@@ -19,10 +19,10 @@ import java.util.regex.Pattern;
  * QQ：2277630164
  * 有无法转化的样式望告知
  **/
-public class Latex_Word {
-    private static Logger logger=Logger.getLogger("Latex_Word");
+public class LatexWord {
+    private static Logger logger=Logger.getLogger("LatexWord");
     /**
-     *@Author: maoyuwei
+     *@Author: maoyuwei2
      *@Date: 2019/5/12 10:32
      *@Desc: latex公式转化为word公式（omml），（latex公式带边界）
      */
@@ -128,12 +128,4 @@ public class Latex_Word {
         }
         return  true;
     }
-
-    public static void main(String[] args) {
-        String latex = "2^q+⇔";
-        System.out.println(latexToWord(latex));
-    }
-
-
-
 }

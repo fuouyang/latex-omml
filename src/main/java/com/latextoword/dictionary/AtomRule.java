@@ -1,11 +1,13 @@
 package com.latextoword.dictionary;
-//元素具有的格式规则
 
 import com.latextoword.atom.Atom;
 import com.latextoword.atom.AtomBE;
 
 import java.util.Arrays;
 
+/**
+ * 元素具有的格式规则
+ */
 public enum AtomRule {
 	CFRAC(7,"\\cfrac",new Atom(7,"\\cfrac","{",new Atom(),"}",1,"{",new Atom(),"}",1),1,0,0,0,OMathRule.CFRAC),
 	OVER(8,"\\over",new Atom(11,"\\over","{",new Atom(),"}",1,"{",new Atom(),"}",1),-99,0,0,0,OMathRule.OVER),
@@ -269,22 +271,13 @@ public enum AtomRule {
 	NLEFTARROW(251,"\\nleftarrow",new Atom(251,"\\nleftarrow"),0,0,0,0,OMathRule.NLEFTARROW),
 	SUCC(252,"\\succ",new Atom(252,"\\succ"),0,0,0,0,OMathRule.SUCC),
 	MP(253,"\\mp",new Atom(253,"\\mp"),0,0,0,0,OMathRule.MP),
-
-
-
-
     SUP(20,"^",new Atom(20,"^","{",new Atom(),"}",1,"{",new Atom(),"}",1),-1,0,0,0,OMathRule.SUP),
 	SUB(30,"_",new Atom(30,"_","{",new Atom(),"}",1,"{",new Atom(),"}",1),-1,0,0,0,OMathRule.SUB),
-
-
     AND(40,"&",new Atom(40,"&"),0,3,7,2,OMathRule.AND,OMathRule._AMP),
     POUND(41,"&pound;",new Atom(41,"&pound;"),0,0,0,0,OMathRule.POUND),
-
     ENTER(50,"\\\\",new Atom(50,"\\\\"),0,3,7,3,OMathRule.ENTER,OMathRule.DOUBLEENTER),
-
 	LONGEQUAL(51,"═",new Atom(50,"═"),0,0,0,0,OMathRule.LONGEQUAL),
     WAVE(52,"~",new Atom(50,"~"),0,0,0,0,OMathRule.WAVE),
-
 	HFILL(53,"\\hfill",new Atom(53,"\\hfill"),0,3,7,3,OMathRule.HFILL),
 
 
@@ -516,7 +509,7 @@ public enum AtomRule {
 	private OMathRule oMathRule;
 	private OMathRule oMathSecRule; //组不存在时出现只在此组内有效的元素的备用解析方案
 
-	private AtomRule(Integer atomId, String atomName, Atom atom, Integer type, Integer groupBeginEnd, Integer group, Integer order, OMathRule oMathRule){
+	AtomRule(Integer atomId, String atomName, Atom atom, Integer type, Integer groupBeginEnd, Integer group, Integer order, OMathRule oMathRule){
 		this.atomId=atomId;
 		this.atomName=atomName;
 		this.atom=atom;
@@ -527,7 +520,7 @@ public enum AtomRule {
 		this.order=order;
 		this.oMathRule=oMathRule;
 	}
-	private AtomRule(Integer atomId,String atomName,Atom atom,Integer type,Integer groupBeginEnd,Integer group,Integer order,OMathRule oMathRule,OMathRule oMathSecRule){
+	AtomRule(Integer atomId, String atomName, Atom atom, Integer type, Integer groupBeginEnd, Integer group, Integer order, OMathRule oMathRule, OMathRule oMathSecRule){
 		this.atomId=atomId;
 		this.atomName=atomName;
 		this.atom=atom;

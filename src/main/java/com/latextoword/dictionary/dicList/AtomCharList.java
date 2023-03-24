@@ -24,7 +24,7 @@ public class AtomCharList {
 		}
 		private static AtomCharList initAtomCharList() {
 			atomCharList=new AtomCharList();
-			atomCharDic=new Hashtable<String, AtomChar>();
+			atomCharDic= new Hashtable<>();
 			for(AtomChar atomChar:AtomChar.values()) {
 				atomCharDic.put(atomChar.getAtomChar(), atomChar);
 			}
