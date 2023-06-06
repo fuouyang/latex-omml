@@ -20,112 +20,122 @@ import java.util.regex.Pattern;
  * 有无法转化的样式望告知
  **/
 public class LatexWord {
-    private static Logger logger=Logger.getLogger("LatexWord");
+    private static Logger logger = Logger.getLogger("LatexWord");
+
+    public static void main(String[] args) {
+        String latex = "\\rm ^{14}\\text{C}";
+        String latex1 = latexToWordAlreadyClean(latex);
+        System.out.println(latex1);
+    }
+
     /**
-     *@Author: maoyuwei2
-     *@Date: 2019/5/12 10:32
-     *@Desc: latex公式转化为word公式（omml），（latex公式带边界）
+     * @Author: maoyuwei2
+     * @Date: 2019/5/12 10:32
+     * @Desc: latex公式转化为word公式（omml），（latex公式带边界）
      */
-    public static String  latexToWord(String latexStr){
-        String latex= latexClean(latexStr);
+    public static String latexToWord(String latexStr) {
+        String latex = latexClean(latexStr);
         return latexToWordAlreadyClean(latex);
     }
+
     /**
-     *@Author: maoyuwei
-     *@Date: 2019/5/12 10:32
-     *@Desc: latex公式转化为word公式（omml），（latex公式不带边界）
+     * @Author: maoyuwei
+     * @Date: 2019/5/12 10:32
+     * @Desc: latex公式转化为word公式（omml），（latex公式不带边界）
      */
-    public static String  latexToWordAlreadyClean(String latex){
-        List<Atom> atoms= InitAtom.latexIntoAtomAll(latex);
-        AtomAnalysis atomAnalysis=new AtomAnalysis();
-        String message= atomAnalysis.atomListToOMathAtomList(atoms);
-        if(message.indexOf("ERROR")>=0){
-            logger.info("[latexToWord:ERROR]:"+message);
+    public static String latexToWordAlreadyClean(String latex) {
+        List<Atom> atoms = InitAtom.latexIntoAtomAll(latex);
+        AtomAnalysis atomAnalysis = new AtomAnalysis();
+        String message = atomAnalysis.atomListToOMathAtomList(atoms);
+        if (message.contains("ERROR")) {
+            logger.info("[latexToWord:ERROR]:" + message);
             return "ERROR";
         }
         AtomToOMath atomToOMath = new AtomToOMath();
-        String oMathStr= atomToOMath.atomToOMathStrMain(atoms);
-        if(oMathStr.indexOf("ERROR")>=0){
-            logger.info("[latexToWord:ERROR]:"+oMathStr);
+        String oMathStr = atomToOMath.atomToOMathStrMain(atoms);
+        if (oMathStr.contains("ERROR")) {
+            logger.info("[latexToWord:ERROR]:" + oMathStr);
             return "ERROR";
         }
-        if(!checkOmmlFormat(oMathStr)) return "ERROR";
+        if (!checkOmmlFormat(oMathStr)) return "ERROR";
         return oMathStr;
     }
-    public static String  latexToWordResult(String latexStr){
-        String latex= latexClean(latexStr);
-        List<Atom> atoms= InitAtom.latexIntoAtomAll(latex);
-        AtomAnalysis atomAnalysis=new AtomAnalysis();
-        String message= atomAnalysis.atomListToOMathAtomList(atoms);
-        if(message.indexOf("ERROR")>=0){
+
+    public static String latexToWordResult(String latexStr) {
+        String latex = latexClean(latexStr);
+        List<Atom> atoms = InitAtom.latexIntoAtomAll(latex);
+        AtomAnalysis atomAnalysis = new AtomAnalysis();
+        String message = atomAnalysis.atomListToOMathAtomList(atoms);
+        if (message.contains("ERROR")) {
             return message;
         }
         AtomToOMath atomToOMath = new AtomToOMath();
-        String oMathStr= atomToOMath.atomToOMathStrMain(atoms);
-        if(!checkOmmlFormat(oMathStr)) return "ERROR";
+        String oMathStr = atomToOMath.atomToOMathStrMain(atoms);
+        if (!checkOmmlFormat(oMathStr)) return "ERROR";
         return oMathStr;
     }
-    public static String latexClean(String latexStr){
-        String latex=latexStr.trim();
-        List<Map<String,String>> borderList= new ArrayList<Map<String, String>>();
-        Map<String,String> map1=new HashMap<String, String>();
-        map1.put("leftBorder","\\(");
-        map1.put("rightBorder","\\)");
+
+    public static String latexClean(String latexStr) {
+        String latex = latexStr.trim();
+        List<Map<String, String>> borderList = new ArrayList<>();
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("leftBorder", "\\(");
+        map1.put("rightBorder", "\\)");
         borderList.add(map1);
 
-        Map<String,String> map2=new HashMap<String, String>();
-        map2.put("leftBorder","$$");
-        map2.put("rightBorder","$$");
+        Map<String, String> map2 = new HashMap<>();
+        map2.put("leftBorder", "$$");
+        map2.put("rightBorder", "$$");
         borderList.add(map2);
 
-        Map<String,String> map3=new HashMap<String, String>();
-        map3.put("leftBorder","\\[");
-        map3.put("rightBorder","\\]");
+        Map<String, String> map3 = new HashMap<>();
+        map3.put("leftBorder", "\\[");
+        map3.put("rightBorder", "\\]");
         borderList.add(map3);
 
-        Map<String,String> map11=new HashMap<String, String>();
-        map11.put("leftBorder","$");
-        map11.put("rightBorder","$");
+        Map<String, String> map11 = new HashMap<>();
+        map11.put("leftBorder", "$");
+        map11.put("rightBorder", "$");
         borderList.add(map11);
 
-        int latexLength=latex.length();
-        if(latexLength<2)  return "ERROR";
-        for(Map<String,String> map:borderList){
-            String leftBorder=map.get("leftBorder");
-            String rightBorder=map.get("rightBorder");
-            int cutLength=leftBorder.length();
-            if(latex.substring(0,cutLength).equals(leftBorder)&&latex.substring(latexLength-cutLength).equals(rightBorder)){
-                latex=latex.substring(cutLength,latexLength-cutLength);
+        int latexLength = latex.length();
+        if (latexLength < 2) return "ERROR";
+        for (Map<String, String> map : borderList) {
+            String leftBorder = map.get("leftBorder");
+            String rightBorder = map.get("rightBorder");
+            int cutLength = leftBorder.length();
+            if (latex.substring(0, cutLength).equals(leftBorder) && latex.substring(latexLength - cutLength).equals(rightBorder)) {
+                latex = latex.substring(cutLength, latexLength - cutLength);
                 break;
             }
         }
-        return  latex;
+        return latex;
     }
 
-    public static boolean checkOmmlFormat(String omml){
-        String ommlStr=omml.replaceAll("<[^>]+/>","");
-        Map<String,Integer> labelCount=new HashMap<String, Integer>();
-        String regexStart="(?<=<)m:\\w+";
-        Pattern patternStart=Pattern.compile(regexStart);
-        Matcher matcherStart=patternStart.matcher(ommlStr);
-        while (matcherStart.find()){
-            String label=matcherStart.group();
-            labelCount.put(label,labelCount.get(label)==null?1:labelCount.get(label)+1);
+    public static boolean checkOmmlFormat(String omml) {
+        String ommlStr = omml.replaceAll("<[^>]+/>", "");
+        Map<String, Integer> labelCount = new HashMap<>();
+        String regexStart = "(?<=<)m:\\w+";
+        Pattern patternStart = Pattern.compile(regexStart);
+        Matcher matcherStart = patternStart.matcher(ommlStr);
+        while (matcherStart.find()) {
+            String label = matcherStart.group();
+            labelCount.put(label, labelCount.get(label) == null ? 1 : labelCount.get(label) + 1);
         }
-        String regexEnd="(?<=</)m:\\w+";
-        Pattern patternEnd=Pattern.compile(regexEnd);
-        Matcher matcherEnd=patternEnd.matcher(ommlStr);
-        while (matcherEnd.find()){
-            String label=matcherEnd.group();
-            labelCount.put(label,labelCount.get(label)==null?-1:labelCount.get(label)-1);
+        String regexEnd = "(?<=</)m:\\w+";
+        Pattern patternEnd = Pattern.compile(regexEnd);
+        Matcher matcherEnd = patternEnd.matcher(ommlStr);
+        while (matcherEnd.find()) {
+            String label = matcherEnd.group();
+            labelCount.put(label, labelCount.get(label) == null ? -1 : labelCount.get(label) - 1);
         }
-        for(String key:labelCount.keySet()){
-            if(!labelCount.get(key).equals(0)){
-                logger.info("----------------不闭合标签：["+key+"]----------------------------------------------");
-                logger.info("----------------公式转换标签不闭合！--------------->>>["+omml+"]");
+        for (String key : labelCount.keySet()) {
+            if (!labelCount.get(key).equals(0)) {
+                logger.info("----------------不闭合标签：[" + key + "]----------------------------------------------");
+                logger.info("----------------公式转换标签不闭合！--------------->>>[" + omml + "]");
                 return false;
             }
         }
-        return  true;
+        return true;
     }
 }
