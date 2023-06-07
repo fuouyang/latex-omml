@@ -420,9 +420,13 @@ public class AtomAnalysis {
     public boolean atomToOMathSeriesAtom(List<Atom> atoms, Integer i) {
         Atom atom = atoms.get(i);
         List<AtomRuleSeries> atomRuleSeriesDicList = atomRuleSeriesDic.get(atom.getAtomName());
-        if (atomRuleSeriesDicList == null || atomRuleSeriesDicList.size() < 1) return false;
+        if (atomRuleSeriesDicList == null || atomRuleSeriesDicList.size() < 1) {
+            return false;
+        }
         List<AtomBE> atomBEs = atom.getAtomBEs();
-        if (atomBEs == null) atomBEs = new ArrayList<AtomBE>();
+        if (atomBEs == null) {
+            atomBEs = new ArrayList<>();
+        }
         AtomRuleSeries atomRuleSeriesMatched = null;
         for (AtomRuleSeries atomRuleSeries : atomRuleSeriesDicList) {
             int step = atomRuleSeries.getType();
