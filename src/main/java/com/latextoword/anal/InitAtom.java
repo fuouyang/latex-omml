@@ -1,9 +1,6 @@
 package com.latextoword.anal;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,7 +47,7 @@ public class InitAtom {
     public static String blockAtomAddBrace(String latex, String regex, int braceflag) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(latex);
-        List<Integer> indexList = new ArrayList<Integer>();
+        List<Integer> indexList = new ArrayList<>();
         while (matcher.find()) {
             if (braceflag == 0) {
                 indexList.add(matcher.start());
@@ -80,16 +77,17 @@ public class InitAtom {
     }
 
     public static List<Atom> latexIntoAtom(String latex) {
-        List<Atom> atoms = new ArrayList<Atom>();
+        List<Atom> atoms = new ArrayList<>();
         String noAnalStr = "";
-        Integer notTogetherCount = 0;//不能合并在一起的atom数量
+        int notTogetherCount = 0;//不能合并在一起的atom数量
         for (int i = 0; i < latex.length(); ) {
             Atom atom = new Atom();
             String tmpChar = latex.substring(i, i + 1);
             String tmpLatex = latex.substring(i);
             Integer step = charToAtom(tmpChar, tmpLatex, atom);
             notTogetherCount--;
-            if (atom.getAnalType() != null && atom.getAnalType().equals(1)) notTogetherCount = 3;
+            if (atom.getAnalType() != null && atom.getAnalType().equals(1))
+                notTogetherCount = 3;
             if (notTogetherCount < 1 && atom.getAnalType() != null && atom.getAnalType().equals(0) && atom.getType() != null && atom.getType().equals(0) && atom.getAtomBEs() == null && atom.getAtomName() != null) {
                 noAnalStr = noAnalStr + atom.getAtomName();
             } else {
@@ -127,13 +125,16 @@ public class InitAtom {
             if (atomBEs != null && atomBEs.size() > 0) {
                 for (AtomBE atomBE : atomBEs) {
                     Atom atomTmp = atomBE.getAtom();
-                    if (atomTmp == null || atomTmp.getType() == null || !atomTmp.getType().equals(1) || atomTmp.getAtomName() == null || atomTmp.getAtomName().equals(""))
+                    if (atomTmp == null || atomTmp.getType() == null || !atomTmp.getType().equals(1) || atomTmp.getAtomName() == null || atomTmp.getAtomName().equals("")) {
                         continue;
+                    }
                     List<Atom> childrenAtom = latexIntoAtom(atomTmp.getAtomName());
                     atomTmp.setAtomName(null);
                     atomTmp.setType(0);
                     atomTmp.setAnalType(0);
-                    if (childrenAtom == null || childrenAtom.size() < 1) continue;
+                    if (childrenAtom.size() < 1) {
+                        continue;
+                    }
                     latexCellIntoAtom(childrenAtom);
                     atomTmp.setAtomBEsFromAtomList(childrenAtom);
                 }
@@ -143,7 +144,9 @@ public class InitAtom {
                 atom.setAtomName(null);
                 atom.setType(0);
                 atom.setAnalType(0);
-                if (childrenAtom == null || childrenAtom.size() < 1) continue;
+                if (childrenAtom.size() < 1) {
+                    continue;
+                }
                 latexCellIntoAtom(childrenAtom);
                 atom.setAtomBEsFromAtomList(childrenAtom);
             }
@@ -164,7 +167,9 @@ public class InitAtom {
         for (AtomRegex atomRegex : regex) {
             atomStr = getFirstMatchStr(latexStr, atomRegex, atomChar.getType());
             atomRegexTmp = atomRegex;
-            if (atomStr != null && !atomStr.equals("")) break;
+            if (atomStr != null && !atomStr.equals("")) {
+                break;
+            }
         }
         if (atomChar.getType().equals(0) && (atomRegexTmp == null || atomRegexTmp.getMatchtype() == null || !atomRegexTmp.getMatchtype().equals(1))) {//本级需转义
             resultAtom.setAtomName(atomStr == null || atomStr.equals("") ? charStr : atomStr);
@@ -175,7 +180,9 @@ public class InitAtom {
             }
             if (atomRegexTmp != null && atomRegexTmp.getRegexId() != null && atomRegexTmp.getRegexId().equals(1) && atomStr != null && !atomStr.equals("")) {//去除"^\\\\([a-zA-Z]+|\\\\| |;|,|!)"匹配后的一个空格
                 String nextStr = atomStr.length() + 1 > latexStr.length() ? null : latexStr.substring(atomStr.length(), atomStr.length() + 1);
-                if (nextStr != null && nextStr.equals(" ")) return atomStr.length() + 1;
+                if (nextStr != null && nextStr.equals(" ")) {
+                    return atomStr.length() + 1;
+                }
             }
             String afterCharStr = charStr.length() > latexStr.length() ? null : latexStr.substring(charStr.length());
             if (atomStr == null && afterCharStr != null) {
@@ -196,8 +203,8 @@ public class InitAtom {
                 resultAtom.setAnalType(0);
                 return 1;
             }
-            Integer stepTmp = atomStr == null || atomStr.equals("") ? 1 : atomStr.length();
-            if (atomStr != null && !atomStr.equals("")) {
+            Integer stepTmp = atomStr.equals("") ? 1 : atomStr.length();
+            if (!atomStr.equals("")) {
                 int beginLength = atomRegexTmp.getMatchtype() != null && atomRegexTmp.getMatchtype().equals(1) ? 2 : 1;
                 atomStr = atomStr.substring(beginLength);
                 atomStr = atomStr.length() > beginLength ? atomStr.substring(0, atomStr.length() - beginLength) : "";
@@ -210,7 +217,7 @@ public class InitAtom {
             atomBE.setBegin(atomRegexTmp == null || atomRegexTmp.getBegin() == null ? null : atomRegexTmp.getBegin());
             atomBE.setEnd(atomRegexTmp == null || atomRegexTmp.getEnd() == null ? null : atomRegexTmp.getEnd());
             atomBE.setType(atomRegexTmp == null || atomRegexTmp.getType() == null ? null : atomRegexTmp.getType());
-            resultAtom.setAtomBEs(Arrays.asList(atomBE));
+            resultAtom.setAtomBEs(Collections.singletonList(atomBE));
             resultAtom.setType(0);
             resultAtom.setAnalType(0);
             return stepTmp;

@@ -23,10 +23,10 @@ public enum AtomChar {
     WAVE("~", new ArrayList<>(), 0),
     ;
 
-    private String atomChar;
-    private List<AtomRegex> regex;
+    private final String atomChar;
+    private final List<AtomRegex> regex;
     //0:atomName;1:atomBEs
-    private Integer type;
+    private final Integer type;
 
     AtomChar(String atomChar, List<AtomRegex> regex, Integer type) {
         this.atomChar = atomChar;
@@ -38,24 +38,13 @@ public enum AtomChar {
         return atomChar;
     }
 
-    public void setAtomChar(String atomChar) {
-        this.atomChar = atomChar;
-    }
-
     public List<AtomRegex> getRegex() {
         return regex;
-    }
-
-    public void setRegex(List<AtomRegex> regex) {
-        this.regex = regex;
     }
 
     public Integer getType() {
         return type;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
 
 }

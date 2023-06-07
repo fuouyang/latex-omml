@@ -1,5 +1,5 @@
 package com.latextoword.atom;
-//元素结构
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class Atom {
         this.atomId = atomId;
         this.atomName = atomName;
         AtomBE atomBE = new AtomBE(begin, atom, end);
-        List<AtomBE> atomBEs = new ArrayList<AtomBE>();
+        List<AtomBE> atomBEs = new ArrayList<>();
         atomBEs.add(atomBE);
         this.atomBEs = atomBEs;
     }
@@ -202,6 +202,7 @@ public class Atom {
     public void setAtomRuleSeries(AtomRuleSeries atomRuleSeries) {
         this.atomRuleSeries = atomRuleSeries;
     }
+
     public MatrixStyle getMatrixStyle() {
         return matrixStyle;
     }

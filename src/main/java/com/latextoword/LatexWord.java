@@ -23,9 +23,12 @@ public class LatexWord {
     private static Logger logger = Logger.getLogger("LatexWord");
 
     public static void main(String[] args) {
-        String latex = "\\rm ^{14}\\text{C}";
-        String latex1 = latexToWordAlreadyClean(latex);
-        System.out.println(latex1);
+        String latex1 = "{{\\,}^{18}}\\text{O}";
+        String latex2 = "\\rm ^{14}\\text{C}";
+        String word1 = latexToWordAlreadyClean(latex1);
+        String word2 = latexToWordAlreadyClean(latex2);
+        System.out.println(word1);
+        System.out.println(word2);
     }
 
     /**
@@ -57,7 +60,9 @@ public class LatexWord {
             logger.info("[latexToWord:ERROR]:" + oMathStr);
             return "ERROR";
         }
-        if (!checkOmmlFormat(oMathStr)) return "ERROR";
+        if (checkOmmlFormat(oMathStr)) {
+            return "ERROR";
+        }
         return oMathStr;
     }
 
@@ -71,7 +76,9 @@ public class LatexWord {
         }
         AtomToOMath atomToOMath = new AtomToOMath();
         String oMathStr = atomToOMath.atomToOMathStrMain(atoms);
-        if (!checkOmmlFormat(oMathStr)) return "ERROR";
+        if (checkOmmlFormat(oMathStr)) {
+            return "ERROR";
+        }
         return oMathStr;
     }
 
@@ -133,9 +140,9 @@ public class LatexWord {
             if (!labelCount.get(key).equals(0)) {
                 logger.info("----------------不闭合标签：[" + key + "]----------------------------------------------");
                 logger.info("----------------公式转换标签不闭合！--------------->>>[" + omml + "]");
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }

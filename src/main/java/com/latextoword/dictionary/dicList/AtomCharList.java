@@ -14,7 +14,9 @@ public class AtomCharList {
     private static volatile AtomCharList atomCharList;
 
     public static Hashtable<String, AtomChar> getAtomCharDicList() {
-        if (atomCharList != null) return AtomCharList.atomCharDic;
+        if (atomCharList != null) {
+            return AtomCharList.atomCharDic;
+        }
         synchronized (AtomList.class) {
             if (atomCharList == null) {
                 initAtomCharList();

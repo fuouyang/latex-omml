@@ -61,11 +61,13 @@ public class AtomToOMath {
         List<AtomBE> atomBEs = atom.getAtomBEs();
         if (atom.getAnalType().equals(0) && atomBEs != null && atomBEs.size() > 0) {
             for (AtomBE atomBE : atomBEs) {
-                if (atomBE.getType().equals(1))
+                if (atomBE.getType().equals(1)) {
                     oMathStr = oMathStr + mrmt + atomBeginEndChineseStrFont(atomBE.getBegin()) + mtmr;
+                }
                 oMathStr = atomToOMathStr(atomBE.getAtom(), oMathStr);
-                if (atomBE.getType().equals(1))
+                if (atomBE.getType().equals(1)) {
                     oMathStr = oMathStr + mrmt + atomBeginEndChineseStrFont(atomBE.getEnd()) + mtmr;
+                }
             }
         }
         if (atom.getAnalType().equals(1)) {
