@@ -1,12 +1,12 @@
 package com.latextoword.atom;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.latextoword.dictionary.AtomRule;
 import com.latextoword.dictionary.AtomRuleSeries;
 import com.latextoword.dictionary.MatrixStyle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Atom {
     private Integer atomId;
@@ -58,7 +58,7 @@ public class Atom {
         this.atomId = atomId;
         this.atomName = atomName;
         AtomBE atomBE = new AtomBE(begin, oMathStyle, atom, end);
-        List<AtomBE> atomBEs = new ArrayList<AtomBE>();
+        List<AtomBE> atomBEs = new ArrayList<>();
         atomBEs.add(atomBE);
         this.atomBEs = atomBEs;
     }
@@ -68,7 +68,7 @@ public class Atom {
         this.atomName = atomName;
         AtomBE atomBE = new AtomBE(begin, atom, end);
         AtomBE atomBE1 = new AtomBE(begin1, atom1, end1);
-        List<AtomBE> atomBEs = new ArrayList<AtomBE>();
+        List<AtomBE> atomBEs = new ArrayList<>();
         atomBEs.add(atomBE);
         atomBEs.add(atomBE1);
         this.atomBEs = atomBEs;
@@ -78,7 +78,7 @@ public class Atom {
         this.atomId = atomId;
         this.atomName = atomName;
         AtomBE atomBE = new AtomBE(begin, atom, end, matchType);
-        List<AtomBE> atomBEs = new ArrayList<AtomBE>();
+        List<AtomBE> atomBEs = new ArrayList<>();
         atomBEs.add(atomBE);
         this.atomBEs = atomBEs;
     }
@@ -87,7 +87,7 @@ public class Atom {
         this.atomId = atomId;
         this.atomName = atomName;
         AtomBE atomBE = new AtomBE(begin, atom, end, matchType, mappingType);
-        List<AtomBE> atomBEs = new ArrayList<AtomBE>();
+        List<AtomBE> atomBEs = new ArrayList<>();
         atomBEs.add(atomBE);
         this.atomBEs = atomBEs;
     }
@@ -97,7 +97,7 @@ public class Atom {
         this.atomName = atomName;
         AtomBE atomBE = new AtomBE(begin, atom, end, matchType);
         AtomBE atomBE1 = new AtomBE(begin1, atom1, end1, matchType1);
-        List<AtomBE> atomBEs = new ArrayList<AtomBE>();
+        List<AtomBE> atomBEs = new ArrayList<>();
         atomBEs.add(atomBE);
         atomBEs.add(atomBE1);
         this.atomBEs = atomBEs;
@@ -128,7 +128,7 @@ public class Atom {
     }
 
     public void setAtomBEsFromAtomList(List<Atom> atoms) {
-        List<AtomBE> atomBETmp = new ArrayList<AtomBE>();
+        List<AtomBE> atomBETmp = new ArrayList<>();
         for (Atom atom : atoms) {
             AtomBE atomBE = new AtomBE();
             atomBE.setAtom(atom);
@@ -139,7 +139,7 @@ public class Atom {
     }
 
     public List<Atom> atomListFromAtomBEs() {
-        List<Atom> atomList = new ArrayList<Atom>();
+        List<Atom> atomList = new ArrayList<>();
         if (atomBEs == null || atomBEs.size() < 1) return null;
         for (AtomBE atomBE : atomBEs) {
             atomList.add(atomBE.getAtom());

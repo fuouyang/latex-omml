@@ -136,7 +136,7 @@ public class AtomAnalysis {
                     if (atomNextBEsTmp == null || atomNextBEsTmp.get(0).getBegin() == null || !atomNextBEsTmp.get(0).getBegin().equals(atomRuleBETmp.getBegin()))
                         continue;
                     Integer mappingType = atomRuleBETmp.getMappingType();
-                    Integer styleLength = 0;
+                    int styleLength = 0;
                     if (groupBeginEnd != null && groupBeginEnd.equals(1) && group != null && groupMap.get(group) != null && groupMap.get(group) > 0 && mappingType != null && mappingType.equals(1) && atomNextBEsTmp.get(0).getAtom() != null && atomNextBEsTmp.get(0).getAtom().getAtomName() != null) {
                         MatrixStyle matrixStyle = matrixDic.get(atomNext.getAtomBEs().get(0).getAtom().getAtomName());
                         if (matrixStyle != null) {

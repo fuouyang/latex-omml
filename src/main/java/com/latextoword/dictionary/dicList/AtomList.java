@@ -24,7 +24,7 @@ public class AtomList {
 	}
 	private static AtomList initAtomList() {
 		atomList=new AtomList();
-		atomDic=new Hashtable<String, AtomRule>();
+		atomDic=new Hashtable<>();
 		for(AtomRule atomRule:AtomRule.values()) {
 			atomDic.put(atomRule.getAtomName(), atomRule);
 		}

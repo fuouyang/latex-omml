@@ -1,14 +1,17 @@
 package com.latextoword.anal;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.latextoword.atom.Atom;
 import com.latextoword.atom.AtomBE;
+import com.latextoword.atom.AtomRegex;
 import com.latextoword.dictionary.AtomChar;
 import com.latextoword.dictionary.dicList.AtomCharList;
-import com.latextoword.atom.AtomRegex;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //以AtomChar里面的字符结构为块级，一层层块级化
 public class InitAtom {
@@ -21,9 +24,34 @@ public class InitAtom {
 
     public static List<Atom> latexIntoAtomAll(String latex) {
         init();
-        List<Atom> firLevel = latexIntoAtom(latexStrLeftBeginToBlock(latex));
+        latex = latexStrLeftBeginToBlock(latex);
+        latex = replaceEmptyElementWithSubOrSup(latex);
+        System.out.println(latex);
+        List<Atom> firLevel = latexIntoAtom(latex);
         latexCellIntoAtom(firLevel);
         return firLevel;
+    }
+
+
+    public static String replaceEmptyElementWithSubOrSup(String latex) {
+        String subLeft = " ^";
+        String subRight = "^ ";
+        String supLeft = " _";
+        String supRight = "_ ";
+        latex = replace(latex, subLeft, "{}^");
+        latex = replace(latex, subRight, "^{}");
+        latex = replace(latex, supLeft, "{}_");
+        latex = replace(latex, supRight, "_{}");
+        return latex;
+    }
+
+    public static String replace(String latex, String regex, String replace) {
+        Pattern compile = Pattern.compile(regex);
+        Matcher matcher = compile.matcher(latex);
+        if (matcher.matches()) {
+            return latex.replaceAll(regex, replace);
+        }
+        return latex;
     }
 
     public static String latexStrLeftBeginToBlock(String latex) {

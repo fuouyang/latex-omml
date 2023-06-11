@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum AtomRuleSeries {
-    SUPSUB(1,"^",Arrays.asList(new AtomBE("{",new Atom(),"}",1),new AtomBE("{",new Atom(),"}",1),new AtomBE(new Atom("_"),1,2),new AtomBE("{",new Atom(),"}",1)),-1,OMathRule.SUPSUB),
-    SUBSUP(2,"_",Arrays.asList(new AtomBE("{",new Atom(),"}",1),new AtomBE("{",new Atom(),"}",1),new AtomBE(new Atom("^"),1,2),new AtomBE("{",new Atom(),"}",1)),-1,OMathRule.SUBSUP),
+    SUPSUB(1,"^",Arrays.asList(new AtomBE("{",new Atom(),"}",1),new AtomBE("{",new Atom(),"}",1),new AtomBE(new Atom("_"),1,2),new AtomBE("{",new Atom(),"}",1)),0,OMathRule.SUPSUB),
+    SUBSUP(2,"_",Arrays.asList(new AtomBE("{",new Atom(),"}",1),new AtomBE("{",new Atom(),"}",1),new AtomBE(new Atom("^"),1,2),new AtomBE("{",new Atom(),"}",1)),0,OMathRule.SUBSUP),
 
     LIM_TO(3,"\\lim",Arrays.asList(new AtomBE(new Atom("_"),1,2),new AtomBE("{",new Atom(),"}",1)),1,OMathRule.LIM_TO),
     UNDER_BRACE(4,"\\underbrace",Arrays.asList(new AtomBE("{",new Atom(),"}",1),new AtomBE(new Atom("_"),1,2),new AtomBE("{",new Atom(),"}",1)),1,OMathRule.UNDER_BRACE),
