@@ -40,6 +40,8 @@ public class AtomToOMath {
         }
         String mtmrmrmt = "</m:t></m:r><m:r><m:t>";
         oMathStr = oMathStr.replace(mtmrmrmt, "");
+        oMathStr=oMathStr.replace("<m:t>\u200B</m:t>","");
+        oMathStr=oMathStr.replace("<m:r></m:r>","");
         if (!groupMap.isEmpty()) {
             oMathStr = oMathStr.replace("<m:mr><m:e></m:e></m:mr>", "");
         }

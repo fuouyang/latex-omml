@@ -32,12 +32,11 @@ public class InitAtom {
         return firLevel;
     }
 
-
     public static String replaceEmptyElementWithSubOrSup(String latex) {
-        String subLeft = " ^";
-        String subRight = "^ ";
-        String supLeft = " _";
-        String supRight = "_ ";
+        String subLeft = "\\s+\\^";
+        String subRight = "\\^\\s+";
+        String supLeft = "\\s+_";
+        String supRight = "_\\s+";
         latex = replace(latex, subLeft, "{}^");
         latex = replace(latex, subRight, "^{}");
         latex = replace(latex, supLeft, "{}_");
@@ -46,12 +45,7 @@ public class InitAtom {
     }
 
     public static String replace(String latex, String regex, String replace) {
-        Pattern compile = Pattern.compile(regex);
-        Matcher matcher = compile.matcher(latex);
-        if (matcher.matches()) {
-            return latex.replaceAll(regex, replace);
-        }
-        return latex;
+        return latex.replaceAll(regex, replace);
     }
 
     public static String latexStrLeftBeginToBlock(String latex) {
