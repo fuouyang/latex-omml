@@ -26,7 +26,6 @@ public class InitAtom {
         init();
         latex = latexStrLeftBeginToBlock(latex);
         latex = replaceEmptyElementWithSubOrSup(latex);
-        System.out.println(latex);
         List<Atom> firLevel = latexIntoAtom(latex);
         latexCellIntoAtom(firLevel);
         return firLevel;

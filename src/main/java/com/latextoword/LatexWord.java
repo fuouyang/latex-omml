@@ -22,14 +22,6 @@ import java.util.regex.Pattern;
 public class LatexWord {
     private static Logger logger = Logger.getLogger("LatexWord");
 
-    public static void main(String[] args) {
-//        String latex1 = "{{\\,}^{18}}\\text{O}";
-        String latex2 = "\\rm ^{14}\\text{C}";
-//        String word1 = latexToWordAlreadyClean(latex1);
-        String word2 = latexToWordAlreadyClean(latex2);
-//        System.out.println(word1);
-        System.out.println(word2);
-    }
 
     /**
      * @Author: maoyuwei2
